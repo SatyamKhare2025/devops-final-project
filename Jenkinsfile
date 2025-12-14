@@ -12,8 +12,15 @@ pipeline {
             steps {
                 sh '''
                   cd app
-                  eval $(minikube docker-env)
                   docker build -t devops-flask:ci .
+                '''
+            }
+        }
+
+        stage('Load Image into Minikube') {
+            steps {
+                sh '''
+                  minikube image load devops-flask:ci
                 '''
             }
         }
@@ -30,3 +37,4 @@ pipeline {
         }
     }
 }
+
